@@ -36,7 +36,7 @@ class Photos
         return $albums;
     }
 
-    private function getAlbums() : array
+    private function getAlbums(): array
     {
         $cacheName = 'photoSets.cache';
         $photoSets = $this->cache->get($cacheName) ?? [];
@@ -63,7 +63,7 @@ class Photos
         return $photoSets;
     }
 
-    private function getPhotos(string $album_id) : array
+    private function getPhotos(string $album_id): array
     {
         $cacheName = 'photos_'.$album_id.'.cache';
         $photos = $this->cache->get($cacheName) ?? [];

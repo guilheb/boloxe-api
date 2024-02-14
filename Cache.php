@@ -11,7 +11,7 @@ class Cache
         $this->directory = __DIR__.'/cache';
     }
 
-    public function get(string $fichier)
+    public function get(string $fichier): mixed
     {
         $filename = "$this->directory/$fichier";
 
@@ -22,12 +22,12 @@ class Cache
         return null;
     }
 
-    public function set(string $fichier, $data) : void
+    public function set(string $fichier, $data): void
     {
         file_put_contents("$this->directory/$fichier", serialize($data));
     }
 
-    public function clear() : void
+    public function clear(): void
     {
         $files = glob("$this->directory/*");
 

@@ -23,4 +23,10 @@ if (isset($_SERVER['HTTP_ORIGIN'])) {
 $photos = new API\Photos\Photos();
 
 header('Content-Type: application/json; charset=utf-8');
-print json_encode($photos->fetch());
+
+try {
+    print json_encode($photos->fetch());
+}
+catch (Exception $e) {
+    http_response_code(503);
+}

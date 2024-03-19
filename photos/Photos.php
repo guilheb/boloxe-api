@@ -5,6 +5,7 @@ namespace API\Photos;
 use API\Cache;
 use API\Photos\Entities\Album;
 use API\Photos\Entities\Photo;
+use Exception;
 
 class Photos
 {
@@ -23,6 +24,10 @@ class Photos
         $this->cache = new Cache();
     }
 
+    /**
+     * @return Album[]
+     * @throws Exception
+     */
     public function fetch(): array
     {
         $albums = $this->getAlbums();
@@ -36,6 +41,10 @@ class Photos
         return $albums;
     }
 
+    /**
+     * @return Album[]
+     * @throws Exception
+     */
     private function getAlbums(): array
     {
         $cacheName = 'photoSets.cache';
@@ -50,6 +59,10 @@ class Photos
             'primary_photo_extras' => 'last_update,url_m'
         ]);
 
+        if ($data === null) {
+            throw new Exception('Flickr HTTP request flickr.photosets.getList failed');
+        }
+
         foreach ($data['photosets']['photoset'] as $photoSet) {
             $photoSets[] = new Album(
                 $photoSet['id'],
@@ -63,6 +76,10 @@ class Photos
         return $photoSets;
     }
 
+    /**
+     * @return Photo[]
+     * @throws Exception
+     */
     private function getPhotos(string $album_id): array
     {
         $cacheName = 'photos_'.$album_id.'.cache';
@@ -78,9 +95,12 @@ class Photos
             'extras'      => 'geo,o_dims,last_update,url_l'
         ]);
 
+        if ($data === null) {
+            throw new Exception('Flickr HTTP request flickr.photosets.getPhotos failed');
+        }
         // stat = ok / fail
-        if ($data['stat'] == 'fail') {
-            throw new \Exception('Album not found');
+        elseif ($data['stat'] == 'fail') {
+            throw new Exception('Album not found');
         }
 
         foreach ($data['photoset']['photo'] as $photo) {

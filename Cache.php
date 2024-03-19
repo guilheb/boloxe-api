@@ -4,12 +4,7 @@ namespace API;
 
 class Cache
 {
-    private string $directory;
-
-    public function __construct()
-    {
-        $this->directory = __DIR__.'/cache';
-    }
+    private string $directory = __DIR__.'/cache';
 
     public function get(string $fichier): mixed
     {

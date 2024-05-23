@@ -1,0 +1,21 @@
+on:
+  push:
+    branches:
+      - main
+name: 🚀 Deploy website on push to master
+jobs:
+  web-deploy:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v4
+    
+    - name: 📂 Sync files
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: ${{ secrets.DEPLOY_FTP_HOST }}
+        username: ${{ secrets.DEPLOY_FTP_USERNAME }}
+        password: ${{ secrets.DEPLOY_FTP_PASSWORD }}
+        port: ${{ secrets.DEPLOY_FTP_PORT }}
+        server-dir: ${{ secrets.DEPLOY_FTP_DIRECTORY }}

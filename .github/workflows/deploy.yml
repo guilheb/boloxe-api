@@ -18,6 +18,5 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
           PROJECT_PATH=/docker/volumes/boloxe.com/api
-
           docker exec –w $PROJECT_PATH boloxe git pull
           docker exec –w $PROJECT_PATH boloxe composer install --no-dev --optimize-autoloader

@@ -1,5 +1,9 @@
-name: Deploy to VPS
+on:
+  push:
+    branches:
+      - production
 
+name: Deploy to VPS
 jobs:
   deploy:
     runs-on: ubuntu-latest

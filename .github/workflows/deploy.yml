@@ -1,0 +1,19 @@
+name: Deploy to VPS
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Deploy to Host
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ vars.SSH_HOST }}
+        username: ${{ vars.SSH_USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          PROJECT_PATH=/docker/volumes/boloxe.com/api
+
+          docker exec –w $PROJECT_PATH boloxe git pull
+          docker exec –w $PROJECT_PATH boloxe composer install --no-dev --optimize-autoloader

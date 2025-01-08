@@ -1,11 +1,8 @@
 <?php
 
-require_once '../config.php';
-require_once '../Cache.php';
-require_once 'Photos.php';
-require_once 'FlickrAPI.php';
-require_once 'Entities/Album.php';
-require_once 'Entities/Photo.php';
+use API\Cache;
+
+require_once __DIR__ . '/../vendor/autoload.php';
 
 if (isset($_SERVER['HTTP_ORIGIN'])) {
     // Allow localhost or boloxe.com
@@ -20,12 +17,11 @@ if (isset($_SERVER['HTTP_ORIGIN'])) {
     }
 }
 
-$photos = new API\Photos\Photos();
-
 header('Content-Type: application/json; charset=utf-8');
 
 try {
-    print json_encode($photos->fetch());
+    $cache = new Cache();
+    print json_encode($cache->get('boloxe_portfolio_albums'));
 }
 catch (Exception $e) {
     http_response_code(503);

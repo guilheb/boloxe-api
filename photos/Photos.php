@@ -2,14 +2,12 @@
 
 namespace API\Photos;
 
-use API\Cache;
 use API\Photos\Entities\Album;
 use API\Photos\Entities\Photo;
 use Exception;
 
 class Photos
 {
-    private Cache $cache;
     private FlickrAPI $flickr;
 
     public function __construct()
@@ -20,8 +18,6 @@ class Photos
         $this->flickr->setOauthData(FlickrAPI::USER_NSID, $_ENV['FLICKR_USER_NSID']);
         $this->flickr->setOauthData(FlickrAPI::USER_NAME, $_ENV['FLICKR_USER_NAME']);
         $this->flickr->setOauthData(FlickrAPI::USER_FULL_NAME, $_ENV['FLICKR_USER_FULL_NAME']);
-
-        $this->cache = new Cache();
     }
 
     /**
@@ -47,13 +43,6 @@ class Photos
      */
     private function getAlbums(): array
     {
-        $cacheName = 'photoSets.cache';
-        $photoSets = $this->cache->get($cacheName) ?? [];
-
-        if ($photoSets != null) {
-            return $photoSets;
-        }
-
         $data = $this->flickr->call('flickr.photosets.getList', [
             'user_id'              => $_ENV['FLICKR_USER_NSID'],
             'primary_photo_extras' => 'last_update,url_m'
@@ -71,8 +60,6 @@ class Photos
             );
         }
 
-        $this->cache->set($cacheName, $photoSets);
-
         return $photoSets;
     }
 
@@ -82,13 +69,6 @@ class Photos
      */
     private function getPhotos(string $album_id): array
     {
-        $cacheName = 'photos_'.$album_id.'.cache';
-        $photos = $this->cache->get($cacheName) ?? [];
-
-        if ($photos != null) {
-            return $photos;
-        }
-
         $data = $this->flickr->call('flickr.photosets.getPhotos', [
             'photoset_id' => $album_id,
             'user_id'     => $_ENV['FLICKR_USER_NSID'],
@@ -111,8 +91,6 @@ class Photos
                 $photo['width_l'],
             );
         }
-
-        $this->cache->set($cacheName, $photos);
 
         return $photos;
     }

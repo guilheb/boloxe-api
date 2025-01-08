@@ -2,32 +2,35 @@
 
 namespace API;
 
+use Redis;
+
 class Cache
 {
-    private string $directory = __DIR__.'/cache';
+    private Redis $redis;
 
-    public function get(string $fichier): mixed
+    public function __construct()
     {
-        $filename = "$this->directory/$fichier";
+        $this->redis = new Redis();
+        $this->redis->connect($_ENV['REDIS_HOST'], $_ENV['REDIS_PORT']);
 
-        if (is_file($filename) && filemtime($filename) >= strtotime('15 minutes ago')) {
-            return unserialize(file_get_contents($filename));
+        if (!empty($_ENV['REDIS_PASSWORD'])) {
+            $this->redis->auth($_ENV['REDIS_PASSWORD']);
         }
-
-        return null;
     }
 
-    public function set(string $fichier, $data): void
+    public function get(string $key): mixed
     {
-        file_put_contents("$this->directory/$fichier", serialize($data));
+        $serializedData = $this->redis->get($key);
+
+        return $serializedData !== false ? unserialize($serializedData) : null;
     }
 
-    public function clear(): void
+    public function set(string $key, mixed $data, int $cacheLifeInSeconds = -1): void
     {
-        $files = glob("$this->directory/*");
-
-        foreach($files as $file) {
-            unlink($file);
+        if ($cacheLifeInSeconds > 0) {
+            $this->redis->setex($key, $cacheLifeInSeconds, serialize($data));
+        } else {
+            $this->redis->set($key, serialize($data));
         }
     }
 }

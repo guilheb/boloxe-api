@@ -1,0 +1,20 @@
+{
+    "name": "guilheb/boloxe-api",
+    "description": "Various API for boloxe.com",
+    "autoload": {
+        "files": [
+            "config.php",
+            "Cache.php",
+            "photos/Photos.php",
+            "photos/FlickrAPI.php",
+            "photos/Entities/Album.php",
+            "photos/Entities/Photo.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "Guillaume Hébert"
+        }
+    ],
+    "require": {}
+}

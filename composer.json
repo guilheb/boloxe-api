@@ -2,19 +2,19 @@
     "name": "guilheb/boloxe-api",
     "description": "Various API for boloxe.com",
     "autoload": {
-        "files": [
-            "config.php",
-            "Cache.php",
-            "photos/Photos.php",
-            "photos/FlickrAPI.php",
-            "photos/Entities/Album.php",
-            "photos/Entities/Photo.php"
-        ]
+        "psr-4": {
+            "API\\": "src/"
+        }
     },
     "authors": [
         {
             "name": "Guillaume Hébert"
         }
     ],
-    "require": {}
+    "require": {
+        "php": "^8.5",
+        "ext-curl": "*",
+        "ext-redis": "*",
+        "vlucas/phpdotenv": "^5.6"
+    }
 }

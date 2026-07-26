@@ -12,12 +12,12 @@ class Photos
 
     public function __construct()
     {
-        $this->flickr = new FlickrAPI($_ENV['FLICKR_API_KEY'], $_ENV['FLICKR_API_SECRET']);
-        $this->flickr->setOauthData(FlickrAPI::OAUTH_ACCESS_TOKEN, $_ENV['FLICKR_OAUTH_ACCESS_TOKEN']);
-        $this->flickr->setOauthData(FlickrAPI::OAUTH_ACCESS_TOKEN_SECRET, $_ENV['FLICKR_OAUTH_ACCESS_TOKEN_SECRET']);
-        $this->flickr->setOauthData(FlickrAPI::USER_NSID, $_ENV['FLICKR_USER_NSID']);
-        $this->flickr->setOauthData(FlickrAPI::USER_NAME, $_ENV['FLICKR_USER_NAME']);
-        $this->flickr->setOauthData(FlickrAPI::USER_FULL_NAME, $_ENV['FLICKR_USER_FULL_NAME']);
+        $this->flickr = new FlickrAPI($_SERVER['FLICKR_API_KEY'], $_SERVER['FLICKR_API_SECRET']);
+        $this->flickr->setOauthData(FlickrAPI::OAUTH_ACCESS_TOKEN, $_SERVER['FLICKR_OAUTH_ACCESS_TOKEN']);
+        $this->flickr->setOauthData(FlickrAPI::OAUTH_ACCESS_TOKEN_SECRET, $_SERVER['FLICKR_OAUTH_ACCESS_TOKEN_SECRET']);
+        $this->flickr->setOauthData(FlickrAPI::USER_NSID, $_SERVER['FLICKR_USER_NSID']);
+        $this->flickr->setOauthData(FlickrAPI::USER_NAME, $_SERVER['FLICKR_USER_NAME']);
+        $this->flickr->setOauthData(FlickrAPI::USER_FULL_NAME, $_SERVER['FLICKR_USER_FULL_NAME']);
     }
 
     /**
@@ -44,7 +44,7 @@ class Photos
     private function getAlbums(): array
     {
         $data = $this->flickr->call('flickr.photosets.getList', [
-            'user_id'              => $_ENV['FLICKR_USER_NSID'],
+            'user_id'              => $_SERVER['FLICKR_USER_NSID'],
             'primary_photo_extras' => 'last_update,url_m'
         ]);
 
@@ -71,7 +71,7 @@ class Photos
     {
         $data = $this->flickr->call('flickr.photosets.getPhotos', [
             'photoset_id' => $album_id,
-            'user_id'     => $_ENV['FLICKR_USER_NSID'],
+            'user_id'     => $_SERVER['FLICKR_USER_NSID'],
             'extras'      => 'geo,o_dims,last_update,url_l'
         ]);
 

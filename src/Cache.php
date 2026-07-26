@@ -11,10 +11,10 @@ class Cache
     public function __construct()
     {
         $this->redis = new Redis();
-        $this->redis->connect($_ENV['REDIS_HOST'], $_ENV['REDIS_PORT']);
+        $this->redis->connect($_SERVER['REDIS_HOST'], $_SERVER['REDIS_PORT']);
 
-        if (!empty($_ENV['REDIS_PASSWORD'])) {
-            $this->redis->auth($_ENV['REDIS_PASSWORD']);
+        if (!empty($_SERVER['REDIS_PASSWORD'])) {
+            $this->redis->auth($_SERVER['REDIS_PASSWORD']);
         }
     }
 

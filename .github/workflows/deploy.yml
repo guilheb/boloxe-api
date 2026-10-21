@@ -2,6 +2,7 @@ on:
   push:
     branches:
       - production
+  workflow_dispatch:
 name: 🚀 Send Docker image to GitLab registry and deploy to VPS
 jobs:
   web-deploy:

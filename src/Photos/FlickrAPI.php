@@ -682,8 +682,6 @@ class FlickrAPI
 
         $headers = curl_getinfo($curl);
 
-        curl_close($curl);
-
         $this->lastHttpResponseCode = $headers['http_code'];
 
         return $response;

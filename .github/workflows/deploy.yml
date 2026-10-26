@@ -36,4 +36,5 @@ jobs:
           username: ${{ vars.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            sudo -n /usr/local/sbin/deploy-boloxe-blog
+            # Le déploiement se fait avec un script qui s'exécute automatiquement à la connection SSH correspondant à la clé privée
+            echo "Deploying"

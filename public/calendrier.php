@@ -1,10 +1,14 @@
 <?php
 
 use API\Calendars\Calendars;
+use API\Cors;
 
 require_once __DIR__ . '/../bootstrap.php';
 
-// Server-to-server only: refused as long as INTERNAL_API_KEY isn't set
+// Before the key check: the preflight request doesn't carry the key
+Cors::handle(['X-Internal-Api-Key']);
+
+// Refused as long as INTERNAL_API_KEY isn't set
 $expectedKey = $_SERVER['INTERNAL_API_KEY'] ?? '';
 $givenKey = $_SERVER['HTTP_X_INTERNAL_API_KEY'] ?? '';
 

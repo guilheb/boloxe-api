@@ -36,22 +36,4 @@ jobs:
           username: ${{ vars.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            set -e
-            cd /docker/api.boloxe.com/
-            
-            echo "Pulling latest image..."
-            docker compose pull
-            
-            echo "Building image..."
-            docker compose build
-            
-            echo "Stopping old container..."
-            docker compose down
-            
-            echo "Starting new container..."
-            docker compose up -d
-            
-            echo "Pruning unused images..."
-            docker image prune -f
-            
-            echo "🏁 Deployment complete on VPS"
+            sudo -n /usr/local/sbin/deploy-boloxe-blog

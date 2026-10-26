@@ -3,8 +3,6 @@
 use API\Calendars\Calendars;
 use API\Cors;
 
-require_once __DIR__ . '/../bootstrap.php';
-
 // Before the key check: the preflight request doesn't carry the key
 Cors::handle(['X-Internal-Api-Key']);
 

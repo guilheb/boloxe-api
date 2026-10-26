@@ -3,8 +3,6 @@
 use API\Cache;
 use API\Cors;
 
-require_once __DIR__ . '/../bootstrap.php';
-
 Cors::handle();
 
 header('Content-Type: application/json; charset=utf-8');

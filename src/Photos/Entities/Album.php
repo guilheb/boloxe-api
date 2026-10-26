@@ -2,19 +2,16 @@
 
 namespace API\Photos\Entities;
 
-class Album
+final class Album
 {
-    public string $id;
-    public string $title;
-    public ?string $description;
-    public array $photos = [];
+    /** @var Photo[] */
+    private(set) array $photos = [];
 
-    public function __construct(string $id, string $title, ?string $description)
-    {
-        $this->id = $id;
-        $this->title = $title;
-        $this->description = $description;
-    }
+    public function __construct(
+        public readonly string $id,
+        public readonly string $title,
+        public readonly ?string $description,
+    ) {}
 
     public function addPhoto(Photo $photo): void
     {

@@ -1,32 +1,28 @@
 <?php
 
 use API\Cache;
-use Dotenv\Dotenv;
 
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../bootstrap.php';
 
-$dotenv = Dotenv::createImmutable(__DIR__ . '/..');
-$dotenv->safeLoad();
+$origin = $_SERVER['HTTP_ORIGIN'] ?? null;
 
-if (isset($_SERVER['HTTP_ORIGIN'])) {
+if ($origin !== null) {
     // Allow localhost or boloxe.com
-    $regex = '/^http(s)?:\/\/((.*\.)?localhost|(www.)?boloxe.com)(:\d+)?/';
-
-    if (preg_match($regex, $_SERVER['HTTP_ORIGIN'] ?? null, $matches)) {
-        header("Access-Control-Allow-Origin: {$matches[0]}");
-        header("Vary: Origin");
-    } else {
+    if (!preg_match('/^https?:\/\/(([\w-]+\.)*localhost|(www\.)?boloxe\.com)(:\d+)?$/D', $origin)) {
         http_response_code(403);
         exit;
     }
+
+    header("Access-Control-Allow-Origin: $origin");
+    header('Vary: Origin');
 }
 
 header('Content-Type: application/json; charset=utf-8');
 
 try {
     $cache = new Cache();
-    print json_encode($cache->get('boloxe_portfolio_albums'));
+    print json_encode($cache->get('boloxe_portfolio_albums'), JSON_THROW_ON_ERROR);
 }
-catch (Exception $e) {
+catch (Exception) {
     http_response_code(503);
 }

@@ -2,22 +2,24 @@
 
 namespace API;
 
+use NoDiscard;
 use Redis;
 
-class Cache
+final class Cache
 {
-    private Redis $redis;
+    private readonly Redis $redis;
 
     public function __construct()
     {
         $this->redis = new Redis();
-        $this->redis->connect($_SERVER['REDIS_HOST'], $_SERVER['REDIS_PORT']);
+        $this->redis->connect($_SERVER['REDIS_HOST'], (int) $_SERVER['REDIS_PORT']);
 
         if (!empty($_SERVER['REDIS_PASSWORD'])) {
             $this->redis->auth($_SERVER['REDIS_PASSWORD']);
         }
     }
 
+    #[NoDiscard]
     public function get(string $key): mixed
     {
         $serializedData = $this->redis->get($key);

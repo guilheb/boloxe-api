@@ -5,10 +5,7 @@
   "type": "module",
   "author": "Guillaume Hébert",
   "scripts": {
-    "dev": "npx wrangler dev --test-scheduled",
-    "deploy": "npx wrangler deploy",
-    "types": "npx wrangler types --include-env=false",
-    "typecheck": "npm run types && tsc"
+    "typecheck": "npx wrangler types --include-env=false && tsc"
   },
   "devDependencies": {
     "typescript": "^7.0.2"

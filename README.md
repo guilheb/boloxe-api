@@ -9,7 +9,7 @@ Various API for boloxe.com, hosted on Cloudflare Workers.
 
 ## Configuration
 
-Secrets are read from `.env` by `npm run dev`, and set on Cloudflare in the dashboard (Settings → Variables and
+Secrets are read from `.env` by `npx wrangler dev`, and set on Cloudflare in the dashboard (Settings → Variables and
 Secrets) or with `npx wrangler secret bulk .env`:
 
 - `INTERNAL_API_KEY`
@@ -20,14 +20,14 @@ Secrets) or with `npx wrangler secret bulk .env`:
 
 ```sh
 npm install
-npm run dev        # http://localhost:8787, cron: curl http://localhost:8787/cdn-cgi/handler/scheduled
+npx wrangler dev --test-scheduled   # http://localhost:8787, cron: curl http://localhost:8787/cdn-cgi/handler/scheduled
 npm run typecheck
 ```
 
 Wrangler isn't a dependency: `npx` runs its latest version. `worker-configuration.d.ts` (Workers runtime types, for the
-`compatibility_date` in `wrangler.jsonc`) isn't committed: `npm run typecheck` or `npm run types` generates it.
+`compatibility_date` in `wrangler.jsonc`) isn't committed: `npm run typecheck` generates it.
 
 ## Deployment
 
 Cloudflare Workers Builds deploys every push to the `production` branch (Git integration set up in the
-Cloudflare dashboard). `npm run deploy` deploys from the command line.
+Cloudflare dashboard). `npx wrangler deploy` deploys from the command line.

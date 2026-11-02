@@ -9,12 +9,16 @@ Various API for boloxe.com, hosted on Cloudflare Workers.
 
 ## Configuration
 
-Secrets are read from `.env` by `npx wrangler dev`, and set on Cloudflare in the dashboard (Settings → Variables and
-Secrets) or with `npx wrangler secret bulk .env`:
+Variables are read from `.env` by `npx wrangler dev`, and managed on Cloudflare in the dashboard (Settings → Variables
+and Secrets). Deploys keep them (`keep_vars` in `wrangler.jsonc`).
 
-- `INTERNAL_API_KEY`
-- `FLICKR_API_KEY`, `FLICKR_API_SECRET`, `FLICKR_OAUTH_ACCESS_TOKEN`, `FLICKR_OAUTH_ACCESS_TOKEN_SECRET`, `FLICKR_USER_NSID`
-- `CAL_<ID>_URL` for each calendar, with optional `CAL_<ID>_NAME` and `CAL_<ID>_COLOR`
+| Variable                                                                               | Type     |
+|----------------------------------------------------------------------------------------|----------|
+| `INTERNAL_API_KEY`                                                                     | Secret   |
+| `FLICKR_API_SECRET`, `FLICKR_OAUTH_ACCESS_TOKEN`, `FLICKR_OAUTH_ACCESS_TOKEN_SECRET`   | Secret   |
+| `FLICKR_API_KEY`, `FLICKR_USER_NSID`                                                   | Text     |
+| `CAL_<ID>_URL`, one per calendar (private feed URL)                                    | Secret   |
+| `CAL_<ID>_NAME`, `CAL_<ID>_COLOR` (optional)                                           | Text     |
 
 ## Development
 

@@ -19,8 +19,9 @@
   // Custom domain: Cloudflare creates the DNS record and the certificate on deploy
   "routes": [
     { "pattern": "api2.boloxe.com", "custom_domain": true }
-  ]
+  ],
 
-  // The secrets (INTERNAL_API_KEY, FLICKR_*, CAL_<ID>_*) are set with `wrangler secret put` or `wrangler secret bulk`
-  // and read from .env by `wrangler dev`
+  // Variables and secrets are managed in the Cloudflare dashboard, and read from .env by `wrangler dev`.
+  // Deploys keep the dashboard's variables instead of replacing them with an empty "vars".
+  "keep_vars": true
 }

@@ -1,0 +1,27 @@
+{
+  "name": "boloxe-api",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-01",
+  "observability": {
+    "enabled": true
+  },
+
+  // Replaces Redis. Without an id, `wrangler deploy` creates the namespace on the first deploy.
+  "kv_namespaces": [
+    { "binding": "CACHE" }
+  ],
+
+  // Replaces cron.php: refreshes the Flickr albums in the cache
+  "triggers": {
+    "crons": ["*/15 * * * *"]
+  },
+
+  // Custom domain: Cloudflare creates the DNS record and the certificate on deploy
+  "routes": [
+    { "pattern": "api.boloxe.com", "custom_domain": true }
+  ],
+
+  // Variables and secrets are managed in the Cloudflare dashboard, and read from .env by `wrangler dev`.
+  // Deploys keep the dashboard's variables instead of replacing them with an empty "vars".
+  "keep_vars": true
+}

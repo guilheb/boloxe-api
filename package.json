@@ -1,0 +1,13 @@
+{
+  "name": "boloxe-api",
+  "description": "Various API for boloxe.com",
+  "private": true,
+  "type": "module",
+  "author": "Guillaume Hébert",
+  "scripts": {
+    "typecheck": "npx wrangler types --include-env=false && tsc"
+  },
+  "devDependencies": {
+    "typescript": "^7.0.2"
+  }
+}

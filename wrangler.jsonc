@@ -18,7 +18,7 @@
 
   // Custom domain: Cloudflare creates the DNS record and the certificate on deploy
   "routes": [
-    { "pattern": "api2.boloxe.com", "custom_domain": true }
+    { "pattern": "api.boloxe.com", "custom_domain": true }
   ],
 
   // Variables and secrets are managed in the Cloudflare dashboard, and read from .env by `wrangler dev`.

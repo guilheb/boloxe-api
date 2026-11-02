@@ -14,10 +14,12 @@
   // Replaces cron.php: refreshes the Flickr albums in the cache
   "triggers": {
     "crons": ["*/15 * * * *"]
-  }
+  },
 
-  // To serve the API on a boloxe.com subdomain instead of *.workers.dev:
-  // "routes": [{ "pattern": "api.boloxe.com", "custom_domain": true }]
+  // Custom domain: Cloudflare creates the DNS record and the certificate on deploy
+  "routes": [
+    { "pattern": "api2.boloxe.com", "custom_domain": true }
+  ]
 
   // The secrets (INTERNAL_API_KEY, FLICKR_*, CAL_<ID>_*) are set with `wrangler secret put` or `wrangler secret bulk`
   // and read from .env by `wrangler dev`
